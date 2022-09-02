@@ -28,8 +28,8 @@ int main(void)
 {
     Sys_Init(); // This always goes at the top of main (defined in init.c)
 
-	char in[3];
-    int size = 3;
+//	char in[3];
+//    int size = 3;
 
     printf("\033[2J\033[;H"); // Erase screen & move cursor to home position
     fflush(stdout); // Need to flush stdout after using printf that doesn't end in \n
@@ -60,10 +60,10 @@ int main(void)
 //    volatile uint32_t * GREENLEDODR = (uint32_t*) 0x40022414U; // Address of GPIO J Output Data Register
 //    *GREENLEDODR ^= (uint16_t)0x0020U; // Toggle Green LED (LED2)
 
-    int ins = 0, break_num;
+    int ins = 0, npp = 12;
     while(1){
     	//to change entire terminal, print this inside loop ?? don't really understand why.
-    	printf("\033[0;33;5;44m");
+    	printf("\033[0;33;44m");
     	fflush(stdout);
     	if (ins == 0){
     		printf("\n                         PRESS <ESC> OR <CTL>+[ TO QUIT\n\n\n\r\n");
@@ -78,16 +78,28 @@ int main(void)
 //    		printf("escape\r\n");
     		break;
     	}
-    	else if (choice < 0x20){
-    		break_num = 6;
-    		while(break_num>0){
-    			printf("\n");
-    			break_num--;
+    	else if (choice < 0x20 && choice<0x7F){
+
+    		printf("\033[%d;0H", npp);
+    		npp++;
+    		if (npp >= 25){
+    			//set cursor to 12
+//    			printf("\033[24;0H");
+    			//erase line
+//    			printf("\033[2K");
+    			//set scroll section line 12-24
+    			printf("\033[12;24r");
+    			//scroll up section
+    			printf("\033M");
+    			//go to line 24
+    			printf("\033[25;0H");
+
     		}
-    		printf("The key board character $XX is \033[4m'not printable'\a\r\n");
+    		printf("\r\n\033[5mThe key board character $%X is \033[4m'not printable'\a", choice);
     	}
     	else{
-    		printf("The keyboard character is \033[31m%c", choice);
+    		printf("\033[6;0H");
+    		printf("The keyboard character is \033[31m%c\r\n", choice);
     	}
     }
 }
