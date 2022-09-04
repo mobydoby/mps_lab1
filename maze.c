@@ -30,6 +30,16 @@ int** create_map(){
 	return board;
 }
 
+
+//make sure char is either WASD or <ESC>
+int valid_char(char c){
+	//          <ESC>	 A		 D		 S		 W		 a		 d 		 s		 w
+	if (move != (0x1b || 0x41 || 0x44 || 0x53 || 0x57 || 0x61 || 0x64 || 0x73 || 0x77)){
+		return false;
+	}
+	return true;
+}
+
 void maze_game(){
 	//initialize game screen
 	int start_row = 7;
@@ -68,8 +78,12 @@ void maze_game(){
 	while(1){
 		printf("\033[20;%dHWASD to move: ",start_col);
 		fflush(stdout);
-		char move;
-		move = getchar();
+
+		//asks for a character until valid
+		do {
+			char move;
+			move = getchar();
+		} while(valid_char(move));
 
 		//break if reached the end
 		break;
