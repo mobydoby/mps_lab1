@@ -23,7 +23,7 @@ void logger(){
 			//    		printf("escape\r\n");
 			break;
 		}
-		else if (choice < 0x20 && choice<0x7F){
+		else if (choice < 0x20 && choice>0x7F){
 
 			printf("\033[%d;0H", npp);
 			npp++;

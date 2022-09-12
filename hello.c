@@ -19,6 +19,7 @@
 #include "hello.h"
 #include "maze.h"
 #include "logger.h"
+#include "hal_gpio.h"
 
 #include<stdint.h>
 
@@ -38,9 +39,14 @@ int main(void)
 //    printf("Test of the printf() function.\n\n");
 
 
+    /*
+     * This turns on clock for GPIO peripheral (needs to do for each port)
+     */
     // Need to enable clock for peripheral bus on GPIO Port J
     __HAL_RCC_GPIOJ_CLK_ENABLE(); 	// Through HAL
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOJEN; // or through registers
+
+
     //// Below two lines are example on how to access a register by knowing it's memory address
     //volatile uint32_t * RCC_AHB1_CLOCK_ENABLE = (uint32_t*) 0x40023830U; // Enable clock for peripheral bus on GPIO Port J
     //*RCC_AHB1_CLOCK_ENABLE |= 512U; // Bitmask for RCC AHB1 initialization: 0x00000200U or 512U in decimal
@@ -62,7 +68,7 @@ int main(void)
 //    volatile uint32_t * GREENLEDODR = (uint32_t*) 0x40022414U; // Address of GPIO J Output Data Register
 //    *GREENLEDODR ^= (uint16_t)0x0020U; // Toggle Green LED (LED2)
 
-    maze_game();
+    hal_gpio();
 }
 
 //------------------------------------------------------------------------------------
