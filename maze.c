@@ -179,7 +179,7 @@ void maze_game(){
 			printf("\033[21;%dHFINISHED!            ",start_col);
 			HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_5, GPIO_PIN_SET);
 			fflush(stdout);
-			break;
+
 		}
 		//break if reached the end
 	}

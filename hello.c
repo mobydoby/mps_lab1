@@ -20,6 +20,7 @@
 #include "maze.h"
 #include "logger.h"
 #include "hal_gpio.h"
+#include "registers.h"
 
 #include<stdint.h>
 
@@ -68,7 +69,7 @@ int main(void)
 //    volatile uint32_t * GREENLEDODR = (uint32_t*) 0x40022414U; // Address of GPIO J Output Data Register
 //    *GREENLEDODR ^= (uint16_t)0x0020U; // Toggle Green LED (LED2)
 
-    hal_gpio();
+    logger();
 }
 
 //------------------------------------------------------------------------------------

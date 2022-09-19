@@ -4,6 +4,7 @@
 #include "init.h"
 
 void logger(){
+	printf("\033[13;24r");
 	//inputs first print flag, line to print error messages
 	int ins = 0, npp = 12;
 	while(1){
@@ -23,24 +24,23 @@ void logger(){
 			//    		printf("escape\r\n");
 			break;
 		}
-		else if (choice < 0x20 && choice>0x7F){
+		else if (choice < 0x20 || choice>0x7F){
 
 			printf("\033[%d;0H", npp);
 			npp++;
 			if (npp >= 25){
 				//set cursor to 12
-				//    			printf("\033[24;0H");
+//				printf("\033[24;0H");
 				//erase line
-				//    			printf("\033[2K");
-				//set scroll section line 12-24
-				printf("\033[12;24r");
+//				printf("\033[2K");
 				//scroll up section
 				printf("\033M");
 				//go to line 24
 				printf("\033[25;0H");
 
 			}
-			printf("\r\n\033[5mThe key board character $%X is \033[4m'not printable'\a", choice);
+			printf("\r\n\033[5m\033[%dHThe key board character $%X is \033[4m'not printable'\a", npp, choice);
+			fflush(stdout);
 		}
 		else{
 			printf("\033[6;0H");
